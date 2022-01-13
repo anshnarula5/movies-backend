@@ -7,7 +7,11 @@ const userRoutes = require("./routes/userRoutes")
 const reviewRoutes = require("./routes/reviewRoutes")
 const uploadRoute = require("./routes/uploadRoute")
 
-mongoose.connect('mongodb://localhost:27017/movies')
+const DB_URL = "mongodb+srv://ansh:ansh123@cluster0.kdck0.mongodb.net/myFirstDatabase?retryWrites=true&w=majority" 
+
+// 'mongodb://localhost:27017/movies'
+
+mongoose.connect(DB_URL)
 .then(() => console.log("Mongoose Running"))
 .catch(err => console.log("Mongoose Error", err))
 
