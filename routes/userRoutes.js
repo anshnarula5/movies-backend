@@ -82,6 +82,61 @@ router.get("/", auth, expressAsyncHandler(async (req, res) => {
     res.json(user)
 }))
 
+// favourite a movie
+
+router.put(
+    "/favourite/:id",
+    auth,
+    expressAsyncHandler(async (req, res) => {
+        const id = req.params.id
+        const user = await User.findById(req.user._id);
+        const favourites = user.favourites;
+        if (
+          favourites.filter((f) => f === id)
+            .length > 0
+        ) {
+          const removeIndex = favourites
+            .map((f) => f.toString())
+            .indexOf(id);
+    
+          favourites.splice(removeIndex, 1);
+          await user.save();
+          res.json(user);
+        } else {
+          favourites.unshift(id);
+          await user.save();
+          res.json(user);
+        }
+    })
+  );
+
+// add a movie to watchlist
+
+router.put(
+    "/watchlist/:id",
+    auth,
+    expressAsyncHandler(async (req, res) => {
+        const id = req.params.id
+        const user = await User.findById(req.user._id);
+        const watchlist = user.watchlist;
+        if (
+          watchlist.filter((f) => f === id)
+            .length > 0
+        ) {
+          const removeIndex = watchlist
+            .map((f) => f.toString())
+            .indexOf(id);
+    
+          watchlist.splice(removeIndex, 1);
+          await user.save();
+          res.json(user);
+        } else {
+          watchlist.unshift(id);
+          await user.save();
+          res.json(user);
+        }
+    })
+  );
 
 
 module.exports = router

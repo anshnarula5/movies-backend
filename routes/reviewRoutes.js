@@ -3,6 +3,7 @@ const expressAsyncHandler = require("express-async-handler");
 const { check, validationResult } = require("express-validator");
 const auth = require("../middlewares/authmiddleware");
 const Review = require("../models/Review");
+const User = require("../models/User");
 const router = express.Router();
 
 // post review
@@ -71,5 +72,6 @@ router.put(
     }
   })
 );
+
 
 module.exports = router;
