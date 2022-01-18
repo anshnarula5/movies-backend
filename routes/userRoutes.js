@@ -44,6 +44,8 @@ router.post(
       email,
       profileImage: savedUser.profileImage,
       token,
+      favourites: user.favourites,
+      watchlist: user.watchlist,
     });
   })
 );
@@ -86,8 +88,7 @@ router.post(
       email,
       profileImage: user.profileImage,
       token,
-      favourites: user.favourites,
-      watchlist: user.watchlist,
+      ... user
     });
   })
 );
