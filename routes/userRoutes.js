@@ -136,7 +136,7 @@ router.put(
     const image = req.body.image
     const user = await User.findById(req.user._id);
     const watchlist = user.watchlist;
-    if (favourites.filter((f) => f.id === id).length > 0) {
+    if (watchlist.filter((f) => f.id === id).length > 0) {
       const removeIndex = watchlist.map((f) => f.id.toString()).indexOf(id);
       watchlist.splice(removeIndex, 1);
       await user.save();
