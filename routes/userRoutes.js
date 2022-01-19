@@ -88,7 +88,8 @@ router.post(
       email,
       profileImage: user.profileImage,
       token,
-      ... user
+      watchlist : user._doc.watchlist,
+      favourites : user._doc.favourites,
     });
   })
 );
