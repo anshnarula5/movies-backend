@@ -44,15 +44,13 @@ router.post(
       email,
       profileImage: savedUser.profileImage,
       token,
-      favourites: user.favourites,
-      watchlist: user.watchlist,
     });
   })
 );
 
 //login
 
-const loginValidator = [
+const loginValidator  = [
   check("email", "Enter correct email").isEmail(),
   check("password", "Password should be atleast 6 characters long")
     .trim()
@@ -88,8 +86,6 @@ router.post(
       email,
       profileImage: user.profileImage,
       token,
-      watchlist : user._doc.watchlist,
-      favourites : user._doc.favourites,
     });
   })
 );
@@ -110,7 +106,7 @@ router.put(
   auth,
   expressAsyncHandler(async (req, res) => {
     const id = req.params.id;
-    const image = req.body.image
+    const image = req.body.image;
     const user = await User.findById(req.user._id);
     const favourites = user.favourites;
     if (favourites.filter((f) => f.id === id).length > 0) {
@@ -119,7 +115,7 @@ router.put(
       await user.save();
       res.json(user);
     } else {
-      favourites.unshift({id, image});
+      favourites.unshift({ id, image });
       await user.save();
       res.json(user);
     }
@@ -133,7 +129,7 @@ router.put(
   auth,
   expressAsyncHandler(async (req, res) => {
     const id = req.params.id;
-    const image = req.body.image
+    const image = req.body.image;
     const user = await User.findById(req.user._id);
     const watchlist = user.watchlist;
     if (watchlist.filter((f) => f.id === id).length > 0) {
@@ -142,10 +138,32 @@ router.put(
       await user.save();
       res.json(user);
     } else {
-      watchlist.unshift({id, image});
+      watchlist.unshift({ id, image });
       await user.save();
       res.json(user);
     }
+  })
+);
+// get favourites
+
+router.get(
+  "/favourites",
+  auth,
+  expressAsyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id);
+    const favourites = user.favourites;
+    res.json(favourites);
+  })
+);
+// get watchlist
+
+router.get(
+  "/watchlist",
+  auth,
+  expressAsyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id);
+    const watchlist = user.watchlist;
+    res.json(watchlist)
   })
 );
 
